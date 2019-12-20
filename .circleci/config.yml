@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    docker: # Docker でステップを実行します
+      - image: circleci/ruby:2.4.2-jessie-node
     steps:
       - checkout
       - run:
