@@ -13,13 +13,47 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
-  it '名がなければ無効な状態である'
+  it '名がなければ無効な状態である' do
+    user = User.new(first_name: nil)
+    user.valid?
+    expect(user.errors[:first_name]).to include("can't be blank")
+  end
 
-  it '姓がなければ無効な状態である'
+  it '姓がなければ無効な状態である' do
+    user = User.new(last_name: nil)
+    user.valid?
+    expect(user.errors[:last_name]).to include("can't be blank")
+  end
 
-  it 'メールアドレスがなければ無効な状態である'
+  it 'メールアドレスがなければ無効な状態である' do
+    user = User.new(email: nil)
+    user.valid?
+    expect(user.errors[:email]).to include("can't be blank")
+  end
 
-  it '重複したメールアドレスなら無効な状態である'
+  it '重複したメールアドレスなら無効な状態である' do
+    User.create(
+      first_name: 'Joe',
+       last_name: 'Tester',
+           email: 'tester@example.com',
+        password: 'dottle-nouveau-pavilion-tights-furze'
+    )
+    user = User.new(
+      first_name: 'Jane',
+       last_name: 'Tester',
+           email: 'tester@example.com',
+        password: 'dottle-nouveau-pavilion-tights-furze'
+    )
+    user.valid?
+    expect(user.errors[:email]).to include('has already been taken')
+  end
 
-  it 'ユーザーのフルネームを文字列として返す'
+  it 'ユーザーのフルネームを文字列として返す' do
+    user = User.new(
+      first_name: 'John',
+       last_name: 'Doe',
+           email: 'johndoe@example.com'
+    )
+    expect(user.name).to eq 'John Doe'
+  end
 end

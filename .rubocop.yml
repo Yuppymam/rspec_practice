@@ -109,6 +109,9 @@ Style/SingleLineBlockParams:
 Layout/SpaceBeforeFirstArg:
   Enabled: false
 
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+
 ##################### Lint ##################################
 
 # * 同名のメソッドがある場合にローカル変数に `_` を付ける
@@ -156,6 +159,10 @@ Metrics/MethodLength:
   Max: 20
   Exclude:
     - "db/migrate/*.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
 
 # 分岐の数。ガード句を多用しているとデフォルト 7 だと厳しい
 Metrics/PerceivedComplexity:
