@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Note, type: :model do
+  it 'ファクトリで関連するデータを生成する' do
+    note = FactoryBot.create(:note)
+    puts "この note の project は#{note.project.inspect}です"
+    puts "この note の user は#{note.user.inspect}です"
+  end
   before do
-    @user = User.create(
-      first_name: 'Joe',
-       last_name: 'Tester',
-           email: 'joetester@example.com',
-        password: 'dottle-nouveau-pavilion-tights-furze'
-    )
+    @user = FactoryBot.create(:user)
 
     @project = @user.projects.create(
       name: 'Test project'
