@@ -76,17 +76,10 @@ RSpec.describe ProjectsController, type: :controller do
       end
     end
 
-    context '認可されていないユーザーとして' do
-      before do
-        @user = FactoryBot.create(:user)
-        other_user = FactoryBot.create(:user)
-        @project = FactoryBot.create(:project, owner: other_user)
-      end
-
-      it '本人のフォームへレンダリングされること' do
-        sign_in @user
-        get :new, params: { id: @project.id }
-        expect(response).to render_template :new
+    context 'ゲストとして' do
+      it 'サインイン画面にリダイレクトすること' do
+        get :new
+        expect(response).to redirect_to '/users/sign_in'
       end
     end
   end
